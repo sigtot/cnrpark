@@ -5,10 +5,6 @@ import datetime
 from typing import List, Dict
 
 
-def test(n: int):
-    return n + 1
-
-
 def main():
     dates_T = Dict[float, Dict[float, int]]
     dates: dates_T = dict()
