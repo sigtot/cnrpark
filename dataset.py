@@ -2,8 +2,8 @@ import os
 import re
 
 from typing import List, Dict
-from skimage import io
 from torch.utils.data import Dataset
+from PIL import Image
 
 
 class CNRParkDataset(Dataset):
@@ -27,7 +27,7 @@ class CNRParkDataset(Dataset):
 
     def __getitem__(self, idx):
         cam_date_spot = next(val for i, val in enumerate(self.cam_dates_spots.values()) if i == idx)
-        images = [io.imread(os.path.join(self.patches_dir, img_loc)) for img_loc in cam_date_spot.keys()]
+        images = [Image.open(os.path.join(self.patches_dir, img_loc)).convert('RGB') for img_loc in cam_date_spot.keys()]
         labels = [label for label in cam_date_spot.values()]
         sample = {'images': images, 'labels': labels}
 

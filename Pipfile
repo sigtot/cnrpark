@@ -10,6 +10,7 @@ numpy = "*"
 scikit-image = "*"
 torch = "*"
 torchvision = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

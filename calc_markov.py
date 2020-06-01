@@ -68,12 +68,16 @@ def calc_ovl(pi_list: List[float], pi: float, sigma: float, ) -> float:
     tol = 10e-7
     if len(pi_list) == 0:
         return 0
-    pi_hat = np.mean(pi_list)
+    pi_hat = float(np.mean(pi_list))
     sigma_hat = np.var(pi_list)
     if sigma_hat > tol:
-        return NormalDist(mu=pi, sigma=sigma).overlap(NormalDist(mu=pi_hat, sigma=sigma_hat))
+        return kl_div_gaussian(pi_hat, sigma_hat, pi, sigma)
     else:
-        return 0
+        return 100
+
+
+def kl_div_gaussian(mu_0: float, sigma_0: float, mu_1: float, sigma_1: float) -> float:
+    return 0.5*(sigma_0 / sigma_1 + ((mu_1 - mu_0)**2)/sigma_1 - 1 + np.log(sigma_1/sigma_0))
 
 
 def calc_pi_list(time_series_list: Iterable[List[Optional[int]]]) -> Tuple[List[float], List[float]]:
